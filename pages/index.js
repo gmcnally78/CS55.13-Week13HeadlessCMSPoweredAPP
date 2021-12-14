@@ -2,19 +2,20 @@ import Head from 'next/head';
 import Link from 'next/link';
 import Layout from '../components/layout';
 import { getSortedPList } from '../lib/pdata';
-import { getSortedCList } from '../lib/cdata';
+// import { getSortedCList } from '../lib/cdata';
 
 export async function getStaticProps() {
-  const allPData = getSortedPList();
-  const allCData = getSortedCList();
+  const allPData = await getSortedPList();
+  // const allCData = getSortedCList();
   return {
     props: {
-      allPData, allCData
+      allPData 
+      // , allCData
     }
   }
 }
 
-export default function Home({ allPData, allCData }) {
+export default function Home({ allPData }) {
   return (
       <Layout home>
         <h1>List of Names</h1>
@@ -25,16 +26,6 @@ export default function Home({ allPData, allCData }) {
             </Link>
           ))}
         </div>
-        <br/>
-         <h1>List of Cars</h1>
-        <div className="list-group">
-          {allCData.map(({ cid, make }) => (
-            <Link key={cid} href={`/cars/${cid}`}>
-              <a className="list-group-item list-group-item-action">{make}</a>
-            </Link>
-          ))}
-        </div>
-
       </Layout>
 
   );
